@@ -1,0 +1,10 @@
+<li>
+  <form method='post' action='/panel/tweet'>
+    {% csrf_token %}
+    <input type='hidden' name='tweet' value='{{object.status}}'>
+    <button>
+      <em>{{object.button}}</em>
+      <span>{{object.description|safe}}</span>
+    </button>
+  </form>
+</li>

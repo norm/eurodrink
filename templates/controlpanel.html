@@ -1,0 +1,24 @@
+{% load render_as %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>eurovisiondrink control</title>
+</head>
+<body>
+
+  <h2>During the performance</h2>
+  <ul class='actions'>
+    {% for incident in performance_incidents %}
+      {% render_as incident controlpanel %}
+    {% endfor %}
+  </ul>
+
+  <h2>During the scoring</h2>
+  <ul class='actions'>
+    {% for incident in scoring_incidents %}
+      {% render_as incident controlpanel %}
+    {% endfor %}
+  </ul>
+
+</body>
+</html>

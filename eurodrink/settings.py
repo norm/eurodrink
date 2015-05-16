@@ -40,6 +40,7 @@ INSTALLED_APPS = (
 
     'render_as',
 
+    'controlpanel',
     'incidents',
     'homepage',
 )
