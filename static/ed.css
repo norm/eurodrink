@@ -1,0 +1,146 @@
+html {
+    margin: 0;
+    padding: 0;
+    background: #666;
+    color: white;
+}
+body {
+    margin: 0 auto;
+    max-width: 850px;
+    padding: 20px 0;
+    font-family: 'Avenir', 'Helmet', 'Freesans', sans-serif;
+    background: black url(/static/rainbow.png) no-repeat top right;
+    line-height: 1.4;
+    box-shadow: 0 0 15px 10px rgba(0, 0, 0, 0.4);
+}
+b {
+    position: absolute;
+    left: -999em;
+}
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin: 20px 30px 40px 50px;
+    padding: 30px;
+    padding-left: 120px;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 1;
+    text-shadow:
+        -1px -1px 1px black,
+        1px -1px 1px black,
+        -1px 1px 1px black,
+        1px 1px 1px black;  
+    background: url(/static/logo.png) no-repeat left center;
+}
+h2, p, li {
+    margin: 0 60px 20px;
+}
+h2 {
+    padding-top: 20px;
+    font-size: 36px;
+}
+h3 {
+    font-weight: normal;
+    font-size: 24px;
+    margin: 40px 60px 10px;
+}
+footer {
+    margin: 40px 40px 20px;
+}
+
+#main {
+    background: url(/static/gradient.png);
+}
+#main a {
+    color: #fbf432;
+    text-decoration: none;
+    font-weight: normal;
+}
+#main a:focus,
+#main a:hover {
+    border-bottom: 1px solid;
+}
+
+#responsibly {
+    margin-bottom: 40px;
+}
+#responsibly li {
+    margin-bottom: 10px;
+}
+
+.rules li {
+    background: white;
+    color: black;
+    border-radius: 10px;
+    position: relative;
+    padding: 10px 120px 10px 10px;
+}
+.rules li h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+.rules li p {
+    margin: 0;
+    font-size: 18px;
+}
+.rules li em {
+    color: #157b66;
+    font-weight: bold;
+    font-style: normal;
+}
+.rules li em img {
+    position: absolute;
+    bottom: 5px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+}
+
+@media (max-width: 500px) {
+    body {
+        background: black url(/static/rainbow-small.png) no-repeat top right;
+    }
+    h1 {
+        font-size: 24px;
+        margin: 20px 0 30px;
+    }
+    h1 span img {
+        width: 40px;
+        height: 40px;
+    }
+    h2, h3, p, li {
+        margin: 0 10px 20px;
+    }
+    h2 { 
+        font-size: 24px;
+    }
+    h3 {
+        font-size: 20px;
+    }
+    #responsibly li {
+        margin-left: 30px;
+    }
+    .rules li {
+        padding: 10px 70px 10px 10px;
+    }
+    .rules li em img {
+        bottom: 10px;
+        right: 10px;
+        width: 50px;
+        height: 50px;
+    }
+    .rules li p {
+        font-size: 16px;
+    }
+}
+@media (min-width: 400px) and (max-width: 500px) {
+    h1 {
+        font-size: 30px;
+        padding-right: 50px;
+    }
+}

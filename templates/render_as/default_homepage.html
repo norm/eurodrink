@@ -1,0 +1,11 @@
+{% load staticfiles %}
+<li class='{{object.amount_class}}'>
+  <h3>{{object.button}}</h3>
+  <p>
+    {{object.description|safe}}
+    <em>
+      <img src='{% static object.amount_class %}.png' alt=''>
+      {{object.get_amount_display}}.
+    </em>
+  </p>
+</li>
