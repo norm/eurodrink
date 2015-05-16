@@ -9,10 +9,18 @@
   <h1>Logged in as {{current_account}}.</h1>
 
   <div id='context'>
+    <p>Current context: <q><code>{{current_context.text}}</code></q></p>
+
+    <form method='post' action='/panel/context'>
+      {% csrf_token %}
+      <input type='text' name='context' value='{{current_context.text}}'>
+      <button>Change the context</button>
+    </form>
+
     <div class='tweet'>
       <form method='post' action='/panel/tweet'>
         {% csrf_token %}
-        <input type='text' name='tweet' value='TWEET #eurovision'>
+        <input type='text' name='tweet' value='%context #eurovision'>
         <button>Free text tweet</button>
       </form>
     </div>

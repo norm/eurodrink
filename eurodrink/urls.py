@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from homepage.views import HomepageView
-from controlpanel.views import ControlPanelView, TweetView
+from controlpanel.views import ControlPanelView, ContextView, TweetView
 
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'panel/$', ControlPanelView.as_view()),
+    url(r'panel/context$', ContextView.as_view()),
     url(r'panel/tweet$', TweetView.as_view()),
 
     url(r'^$', HomepageView.as_view()),
