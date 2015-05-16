@@ -1,2 +1,3 @@
 Django==1.8
 django-render-as==0.1
+twitter==1.17.0

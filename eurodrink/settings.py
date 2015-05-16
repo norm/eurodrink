@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'controlpanel',
     'incidents',
     'homepage',
+    'twitter_accounts',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,3 +113,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+TWITTER_TOKEN=os.getenv('BOOZE_TOKEN')
+TWITTER_SECRET=os.getenv('BOOZE_SECRET')

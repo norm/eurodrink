@@ -20,7 +20,20 @@ class ControlPanelView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ControlPanelView, self).get_context_data(**kwargs)
 
+        account = Account.active_account()
+        context['current_account'] = account
+        context['recent_tweets'] = account.recent_tweets()
+
         context['performance_incidents'] = Incident.performance_incidents()
         context['scoring_incidents'] = Incident.scoring_incidents()
 
         return context
+
+
+class TweetView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        tweet = request.POST.get('tweet', None)
+        if tweet:
+            account = Account.active_account()
+            account.tweet_with_context(tweet)
+        return HttpResponseRedirect('/panel/')

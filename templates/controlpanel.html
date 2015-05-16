@@ -6,6 +6,20 @@
 </head>
 <body>
 
+  <h1>Logged in as {{current_account}}.</h1>
+
+  <div id='context'>
+    <div class='tweet'>
+      <form method='post' action='/panel/tweet'>
+        {% csrf_token %}
+        <input type='text' name='tweet' value='TWEET #eurovision'>
+        <button>Free text tweet</button>
+      </form>
+    </div>
+  </div>
+
+  <hr>
+
   <h2>During the performance</h2>
   <ul class='actions'>
     {% for incident in performance_incidents %}
@@ -19,6 +33,15 @@
       {% render_as incident controlpanel %}
     {% endfor %}
   </ul>
+
+  <div id='recent'>
+    <h2>Recent Tweets</h2>
+    <ul>
+      {% for tweet in recent_tweets|slice:":10" %}
+        <li><q>{{tweet.text}}</q></li>
+      {% endfor %}
+    </ul>
+  </div>
 
 </body>
 </html>
