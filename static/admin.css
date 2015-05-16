@@ -1,0 +1,77 @@
+body, button {
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+ul, li, p {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    /*font-family: sans-serif;*/
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0 0 8px;
+    padding: 0;
+}
+
+hr {
+    clear: both;
+}
+
+input[type=text] {
+    font-size: 16px;
+}
+
+button {
+    border: 1px solid black;
+    background: #ddd;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.tweet input[type=text] {
+    width: 600px;
+}
+
+.actions {
+    padding-left: 30px;
+}
+.actions:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+.actions li {
+    list-style: none;
+}
+.actions li button {
+    border: 1px solid black;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    padding: 8px;
+    width: 160px;
+    margin: 0 20px 20px 0;
+    float: left;
+    max-height: 140px;
+}
+.actions li button em {
+    font-weight: bold;
+    font-style: normal;
+}
+.actions li button span {
+    display: block;
+    height: 150px;
+    color: #999;
+}
+
+#recent {
+    color: #999;
+}
+#recent li {
+    list-style: inside disc;
+}
