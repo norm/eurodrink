@@ -1,0 +1,88 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+/* not needed when printing */
+#main > h3,
+#intro,
+#responsibly,
+footer {
+    display: none;
+}
+
+body {
+    font-family: 'Avenir', 'Helmet', 'Freesans', sans-serif;
+    background: url(/static/logo.png) no-repeat right -10px;
+}
+
+h1 {
+    font-size: 32px;
+    float: left;
+    margin: 0;
+    margin-bottom: 40px;
+    padding: 0;
+}
+h1:after {
+    font-size: 12px;
+    content: '@eurovisiondrink — eurovisiondrinking.com';
+    display: block;
+}
+h2 {
+    font-size: 16px;
+    padding-top: 8px;
+    clear: both;
+}
+
+.rules {
+    margin: 0;
+    padding: 0;
+    width: 99%;
+}
+.rules:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.rules li {
+    list-style: none;
+    display: inline-block;
+    float: left;
+    position: relative;
+
+    /* 50% minus borders minus padding minus 2% gutter */
+    width: calc(49% - 2px - 4px - 40px);
+    padding: 4px;
+    padding-right: 40px;
+    min-height: 40px;
+    margin-bottom: 10px;
+
+    border: 1px dotted #888;
+    border-radius: 5px;
+    vertical-align: top;
+}
+.rules li:nth-child(odd) {
+    margin-right: 2%;
+}
+.rules h3, p {
+    margin: 0;
+    padding: 0;
+}
+.rules h3 {
+    font-size: 10px;
+    margin-bottom: 4px;
+}
+.rules li em {
+    font-weight: bold;
+    font-style: normal;
+}
+.rules li em img {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+}
