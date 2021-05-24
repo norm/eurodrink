@@ -17,7 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic.base import RedirectView
 
+from controlpanel.views import ControlPanel
+
+
 urlpatterns = [
-    path('', RedirectView.as_view(url='/admin/')),
+    path('', RedirectView.as_view(url='/panel/')),
     path('admin/', admin.site.urls),
+    path('panel/', ControlPanel.as_view()),
 ]

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>eurovisiondrink control</title>
+  <style>
+    body, button {
+      font-family: sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Eurovision Drinking Game</h1>
+  </header>
+
+  <main>
+    <div class='performance'>
+      <h2>Performance incidents</h2>
+      <ul class='incidents'>
+        {% for incident in performance_incidents %}
+          <li>
+            <form method='post'>
+              {% csrf_token %}
+              <button type='submit'>
+                <em>{{incident.title}}</em>
+                <span>{{incident.description}}</span>
+              </button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class='score'>
+      <h2>Scoring incidents</h2>
+      <ul class='incidents'>
+        {% for incident in score_incidents %}
+          <li>
+            <form method='post'>
+              {% csrf_token %}
+              <button type='submit'>
+                <em>{{incident.title}}</em>
+                <span>{{incident.description}}</span>
+              </button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class='show'>
+      <h2>Entire show incidents</h2>
+      <ul class='incidents'>
+        {% for incident in show_incidents %}
+          <li>
+            <form method='post'>
+              {% csrf_token %}
+              <button type='submit'>
+                <em>{{incident.title}}</em>
+                <span>{{incident.description}}</span>
+              </button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </main>
+</body>
+</html>

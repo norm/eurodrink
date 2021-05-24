@@ -1,0 +1,20 @@
+{% load i18n %}
+<button class="sticky toggle-nav-sidebar" id="toggle-nav-sidebar" aria-label="{% translate 'Toggle navigation' %}"></button>
+<nav class="sticky" id="nav-sidebar">
+  <div class='module'>
+    <table width='100%'>
+      <caption>
+        <a href='/panel/' class='section'>Control panel</a>
+      </caption>
+      <tbody>
+        <tr>
+          <th>
+            <a href='/panel/'>Go to control panel</a>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  {% include 'admin/app_list.html' with app_list=available_apps show_changelinks=False %}
+</nav>
