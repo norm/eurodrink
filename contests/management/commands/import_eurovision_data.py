@@ -1,3 +1,4 @@
+from datetime import date
 from django.core.management.base import BaseCommand
 import toml
 
@@ -9,6 +10,8 @@ from contests.models import (
     Artist,
     Song,
     Participant,
+    Show,
+    Performance,
 )
 
 
@@ -23,6 +26,7 @@ class Command(BaseCommand):
             self.load_singers('eurovision_data/singers/%s.toml' % contest.year)
             self.load_artists('eurovision_data/artists/%s.toml' % contest.year)
             self.load_songs('eurovision_data/songs/%s.toml' % contest.year, contest)
+            self.load_shows('eurovision_data/shows/%s.toml' % contest.year, contest)
 
     def load_countries(self, data):
         countries = toml.load(data)
@@ -93,3 +97,18 @@ class Command(BaseCommand):
                 country=country,
                 contest=contest,
             )
+
+    def load_shows(self, data, contest):
+        shows = toml.load(data)
+        for show in shows:
+            show_obj, _ = Show.objects.update_or_create(
+                id=show,
+                contest=contest,
+                type=shows[show]['type'],
+                date=shows[show]['date'],
+            )
+            for performance in shows[show]['performances']:
+                perf_obj, _ = Performance.objects.update_or_create(
+                    song=Song.objects.get(id=performance),
+                    show=show_obj,
+                )

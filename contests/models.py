@@ -97,3 +97,47 @@ class Participant(models.Model):
 
     def __str__(self):
         return '%s in %s' % (self.country, self.contest)
+
+
+class Show(models.Model):
+    """
+    An individual live show in a Contest.
+    """
+    class Type(models.TextChoices):
+        FINAL = 'final', _('Grand Final')
+        FIRST_SEMI = 'first-semi', _('First Semi-Final')
+        SECOND_SEMI = 'second-semi', _('Second Semi-Final')
+
+    id = models.CharField(primary_key=True, max_length=64)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    date = models.DateField(null=False, blank=False)
+    type = models.CharField(max_length=16, choices=Type.choices)
+
+    def __str__(self):
+        return u"%s %s" % (self.Type(self.type).label, self.contest)
+
+
+class Performance(models.Model):
+    """
+    A Song, performed in a Show.
+    """
+    class Meta:
+        unique_together = ['song', 'show']
+
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    show = models.ForeignKey(Show, on_delete=models.CASCADE)
+
+    @property
+    def score(self):
+        return self.score_set.aggregate(
+                models.Sum('points')
+            )['points__sum'] or 0
+
+    def __str__(self):
+        return u"%s (%s, %s #%s) in %s" % (
+            self.song.title,
+            self.song.artist,
+            self.song.country,
+            self.song.country.hashtag,
+            self.show,
+        )

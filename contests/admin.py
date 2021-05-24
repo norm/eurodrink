@@ -8,6 +8,8 @@ from .models import (
     Artist,
     Song,
     Participant,
+    Show,
+    Performance,
 )
 
 admin.site.register(Language)
@@ -17,3 +19,5 @@ admin.site.register(Singer)
 admin.site.register(Artist)
 admin.site.register(Song)
 admin.site.register(Participant)
+admin.site.register(Show)
+admin.site.register(Performance)
