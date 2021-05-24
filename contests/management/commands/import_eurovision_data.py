@@ -6,6 +6,7 @@ from contests.models import (
     Country,
     Contest,
     Singer,
+    Artist,
 )
 
 
@@ -18,6 +19,7 @@ class Command(BaseCommand):
 
         for contest in Contest.objects.all():
             self.load_singers('eurovision_data/singers/%s.toml' % contest.year)
+            self.load_artists('eurovision_data/artists/%s.toml' % contest.year)
 
     def load_countries(self, data):
         countries = toml.load(data)
@@ -52,3 +54,14 @@ class Command(BaseCommand):
             )
             for country in citizenships:
                 obj.citizenship.add(Country.objects.get(id=country))
+
+    def load_artists(self, data):
+        artists = toml.load(data)
+        for artist in artists:
+            singers = artists[artist].pop('singer')
+            obj, _ = Artist.objects.update_or_create(
+                id=artist,
+                **artists[artist],
+            )
+            for singer in singers:
+                obj.singer.add(Singer.objects.get(id=singer))

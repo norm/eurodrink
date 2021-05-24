@@ -54,3 +54,16 @@ class Singer(models.Model):
 
     def __str__(self):
         return self.known_as or self.name
+
+
+class Artist(models.Model):
+    """
+    One or more Singers (and any other musicians/performers) that
+    are credited as performing a Song in a Show.
+    """
+    id = models.CharField(primary_key=True, max_length=64)
+    name = models.CharField(max_length=128, blank=False, null=False)
+    singer = models.ManyToManyField(Singer)
+
+    def __str__(self):
+        return self.name
