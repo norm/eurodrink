@@ -141,3 +141,29 @@ class Performance(models.Model):
             self.song.country.hashtag,
             self.show,
         )
+
+
+class Score(models.Model):
+    """
+    A number of points awarded by a Country to a Performance,
+    either by a jury or a televote.
+    """
+    class Meta:
+        unique_together = ['country', 'performance', 'source']
+
+    class AwardedBy(models.TextChoices):
+        JURY = 'jury', _('Jury')
+        TELEVOTE = 'televote', _('Televote')
+
+    points = models.IntegerField()
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    performance = models.ForeignKey(Performance, on_delete=models.CASCADE)
+    source = models.CharField(max_length=16, choices=AwardedBy.choices)
+
+    def __str__(self):
+        return "%d %s points from %s for %s" % (
+            self.points,
+            self.AwardedBy(self.source).label,
+            self.country,
+            self.performance,
+        )

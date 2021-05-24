@@ -10,6 +10,7 @@ from .models import (
     Participant,
     Show,
     Performance,
+    Score,
 )
 
 admin.site.register(Language)
@@ -21,3 +22,4 @@ admin.site.register(Song)
 admin.site.register(Participant)
 admin.site.register(Show)
 admin.site.register(Performance)
+admin.site.register(Score)

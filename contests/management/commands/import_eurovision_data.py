@@ -12,6 +12,7 @@ from contests.models import (
     Participant,
     Show,
     Performance,
+    Score,
 )
 
 
@@ -27,6 +28,15 @@ class Command(BaseCommand):
             self.load_artists('eurovision_data/artists/%s.toml' % contest.year)
             self.load_songs('eurovision_data/songs/%s.toml' % contest.year, contest)
             self.load_shows('eurovision_data/shows/%s.toml' % contest.year, contest)
+
+        for show in Show.objects.all():
+            self.load_scores(
+                'eurovision_data/scores/%s-%s.toml' % (
+                    show.contest.year,
+                    show.type,
+                ),
+                show,
+            )
 
     def load_countries(self, data):
         countries = toml.load(data)
@@ -111,4 +121,20 @@ class Command(BaseCommand):
                 perf_obj, _ = Performance.objects.update_or_create(
                     song=Song.objects.get(id=performance),
                     show=show_obj,
+                )
+
+    def load_scores(self, data, show):
+        scores = toml.load(data)
+        for country_id in scores:
+            country = Country.objects.get(id=country_id)
+            for score in scores[country_id]:
+                performance = Performance.objects.filter(
+                    show=show,
+                    song=Song.objects.get(id=score['song']),
+                )[0]
+                Score.objects.update_or_create(
+                    performance=performance,
+                    country=country,
+                    points=score['points'],
+                    source=score['source'],
                 )
