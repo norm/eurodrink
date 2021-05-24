@@ -1,0 +1,54 @@
+[another-country]
+description = "You're not from around these parts are you?"
+tweet = "A singer is from a different country than that the act is representing."
+penalty = "two-fingers"
+title = "Singer from another country"
+
+[innuendo]
+description = "Sorry, what did they just sing? What are they doing?"
+tweet = "Innuendo! #InYourEndo"
+penalty = "one-finger"
+title = "Innuendo"
+
+[key-change]
+description = "A dramatic Westlife-esque key change in the middle of the song."
+penalty = "one-finger"
+title = "Key change"
+
+[language-change]
+description = "Switching from one language to another, that's just trying to curry favour. Cheats."
+penalty = "one-finger"
+title = "Language change"
+
+[lighting-bloom]
+description = "Turning on all the lights at once (attempting to blind the audience?)"
+penalty = "one-finger"
+title = "Lighting bloom"
+
+[outfit-change]
+description = "\"And try to look as if you dont care less, but if you wanna see some more...\""
+tweet = "Undressing on stage, crikey!"
+penalty = "two-fingers"
+title = "Removes clothing"
+
+[pyrotechnics]
+description = "Pyrotechnics fire at some point during the song."
+tweet = "PYROTECHNICS!"
+penalty = "one-finger"
+title = "Pyrotechnics"
+
+[rule-0]
+description = "The pyrotechnics set fire to something. Accidentally?"
+tweet = "I don't think that should be on fire!"
+penalty = "down"
+title = "Too many pyrotechnics"
+
+[smoke-machine]
+description = "\"We all came out to Montreux...\" Smoke on the water, er, stage."
+penalty = "one-finger"
+title = "Smoke machine"
+
+[wind-machine]
+description = "WHOOSH!"
+penalty = "one-finger"
+title = "Wind machine"

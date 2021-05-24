@@ -1,0 +1,22 @@
+[douze-points]
+description = "The United Kingdom gets top marks from a country. Huh?"
+tweet = "DOUZE POINTS! GET IN!"
+penalty = "down"
+title = "Douze Points"
+
+[milking-it]
+description = "The spokesperson for the country in question makes too big a meal out of their short time on screen."
+tweet = "Alright, stop milking it, give us the scores already!"
+penalty = "one-finger"
+title = "Milking it"
+
+[neighbours]
+description = "A country gives maximum marks to a neighbouring country."
+penalty = "one-finger"
+title = "Top points to your neighbours!"
+
+[pregnant-pause]
+description = "The spokesperson for the country in question doesn't realise they're live on air."
+tweet = "Hello? Is this thing on? Can you hear us?"
+penalty = "one-finger"
+title = "Pregnant pause"

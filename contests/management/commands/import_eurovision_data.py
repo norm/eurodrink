@@ -14,7 +14,11 @@ from contests.models import (
     Performance,
     Score,
 )
-
+from incidents.models import (
+    PerformanceIncidentType,
+    ScoreIncidentType,
+    ShowIncidentType,
+)
 
 class Command(BaseCommand):
     help = 'Import from eurovision_data/ files'
@@ -37,6 +41,10 @@ class Command(BaseCommand):
                 ),
                 show,
             )
+
+        self.load_performance_incident_types('drinking_data/performance.toml')
+        self.load_score_incident_types('drinking_data/score.toml')
+        self.load_show_incident_types('drinking_data/show.toml')
 
     def load_countries(self, data):
         countries = toml.load(data)
@@ -138,3 +146,27 @@ class Command(BaseCommand):
                     points=score['points'],
                     source=score['source'],
                 )
+
+    def load_performance_incident_types(self, data):
+        incidents = toml.load(data)
+        for incident in incidents:
+            PerformanceIncidentType.objects.update_or_create(
+                id=incident,
+                **incidents[incident],
+            )
+
+    def load_score_incident_types(self, data):
+        incidents = toml.load(data)
+        for incident in incidents:
+            ScoreIncidentType.objects.update_or_create(
+                id=incident,
+                **incidents[incident],
+            )
+
+    def load_show_incident_types(self, data):
+        incidents = toml.load(data)
+        for incident in incidents:
+            ShowIncidentType.objects.update_or_create(
+                id=incident,
+                **incidents[incident],
+            )

@@ -1,0 +1,20 @@
+[bad-joke]
+description = "The presenter(s) make a joke that falls flat."
+penalty = "one-finger"
+title = "Bad joke"
+
+[confetti]
+description = "A whole bunch of confetti turns this into a ticker-tape parade!"
+penalty = "two-fingers"
+tweet = "Boom! Boom! Drop that paper in the room! It's a ticker-tape parade!"
+title = "Ticker tape parade"
+
+[new-outfit]
+description = "The presenter(s) change into something new."
+penalty = "one-finger"
+title = "New outfit"
+
+[rainbow-flag]
+description = "A rainbow flag appears, supporting our LGBT Eurovision family!"
+penalty = "one-finger"
+title = "The Rainbow Connection"
