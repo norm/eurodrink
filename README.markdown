@@ -28,3 +28,10 @@ used for the ease of using django to build pages and to work with twitter
 during the contest itself.
 
     sh update.sh
+
+## Using the admin interface
+
+    honcho start web
+
+To log into the admin interface, visit http://localhost:3876/ with the
+username `norm` and password `norm`.
