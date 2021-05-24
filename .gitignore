@@ -1,5 +1,7 @@
 .env
 __pycache__
 db.sqlite3
+site/static/screen.*.css
+site/static/print.*.css
 site/rum-punch/index.html
 site/index.html

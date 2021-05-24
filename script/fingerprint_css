@@ -1,0 +1,15 @@
+#!/usr/bin/env -S bash -euo pipefail
+
+screen_fingerprint=$(sha256sum site/static/screen.css | cut -c1-7)
+print_fingerprint=$(sha256sum site/static/print.css | cut -c1-7)
+
+cp site/static/screen.css site/static/screen.${screen_fingerprint}.css
+echo ++ site/static/screen.${screen_fingerprint}.css
+cp site/static/print.css site/static/print.${print_fingerprint}.css
+echo ++ site/static/print.${print_fingerprint}.css
+
+cat > templates/css.html <<EOF
+  <link rel='stylesheet' media='screen' href='/static/screen.${screen_fingerprint}.css'>
+  <link rel='stylesheet' media='print' href='/static/print.${print_fingerprint}.css'>
+EOF
+echo ++ templates/css.html
