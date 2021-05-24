@@ -1,7 +1,11 @@
 from django.core.management.base import BaseCommand
 import toml
 
-from contests.models import Language, Country
+from contests.models import (
+    Language,
+    Country,
+    Contest,
+)
 
 
 class Command(BaseCommand):
@@ -9,6 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.load_countries('eurovision_data/countries.toml')
+        self.load_contests('eurovision_data/contests.toml')
 
     def load_countries(self, data):
         countries = toml.load(data)
@@ -25,3 +30,10 @@ class Command(BaseCommand):
             for lang in langs:
                 obj.languages.add(lang)
 
+    def load_contests(self, data):
+        contests = toml.load(data)
+        for contest in contests:
+            Contest.objects.update_or_create(
+                year=contest,
+                host=Country.objects.get(id=contests[contest]['host']),
+            )

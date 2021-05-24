@@ -28,3 +28,14 @@ class Country(models.Model):
 
     class Meta:
         ordering = ['english']
+
+
+class Contest(models.Model):
+    """
+    A whole Eurovision Song Contest event.
+    """
+    year = models.IntegerField(primary_key=True)
+    host = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return u"%s" % self.year
