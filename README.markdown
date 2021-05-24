@@ -21,6 +21,7 @@ The control panel is normally used via a virtual environment.
     mkvirtualenv eurodrink
     pip install -r requirements.txt
 
+
 ## Refreshing the data
 
 The database is not to be treated as the canonical source of data, it is just
@@ -29,9 +30,21 @@ during the contest itself.
 
     sh update.sh
 
+
 ## Using the admin interface
 
     honcho start web
 
 To log into the admin interface, visit http://localhost:3876/ with the
 username `norm` and password `norm`.
+
+
+## Website publication
+
+    # preview on http://localhost:37465/
+    honcho start static
+    make static
+
+    # copy when satisifed
+    make static
+    aws s3 sync site/. s3://eurovisiondrinking.com/.

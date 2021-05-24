@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block head_title %}The @eurovisiondrink rum punch recipe{% endblock %}
+
+{% block main %}
+<div id='intro'>
+  <h2>
+    The rules, as tweeted by
+    <a href='https://twitter.com/eurovisiondrink'>@eurovisiondrink</a>
+  </h2>
+
+  <p>
+    The grand traditions laid down by Terry Wogan and Graham Norton mean we
+    drink whilst watching the Eurovision Song Contest.
+  </p>
+  <p>
+    If you like a little competitiveness around it, then here is our list.
+    When anything in this list happens, we all drink.
+  </p>
+
+  <h3>Going to print these out?</h3>
+  <p>
+    <strong class='start'>Don't bother.</strong> You don't need to
+    remember the list. Which is handy because if you play along, towards
+    the end of the night you'll be unable to. Just follow
+    <a href='https://twitter.com/eurovisiondrink'>@eurovisiondrink</a>
+    on Twitter. Every time something happens, you'll see what to do in
+    your timeline.
+  </p>
+  <p>
+    <strong class='start'>Level up!</strong> If you use the Twitter mobile
+    app, turn on notifications from the
+    <a href='https://twitter.com/eurovisiondrink'>@eurovisiondrink</a>
+    profile. Now every time something happens, you'll get binged. (This
+    will happen <strong>a lot</strong> throughout the night and probably
+    prove to be annoying, so this is really only for the hardest of
+    cores.)
+  </p>
+  <p>
+    But if you must have it on paper, just hit print now, and this webpage
+    should comfortably fit on one sheet. No need to copy and paste.
+  </p>
+  <p>
+    <a href='https://twitter.com/eurovisiondrink'>@eurovisiondrink</a> 
+    &mdash; for your real-time booze notifications. Boozifications.
+  </p>
+</div>
+
+<h3>Remember to drink responsibly…</h3>
+<ul id='responsibly'>
+  <li>Always refresh the glass of your guests before your own.</li>
+  <li>Always have copious snacks available.</li>
+  <li>
+    A true Eurovision Drinking Game fan knows to stay hydrated,
+    and to pace themselves. Nobody likes a sloppy drunk.
+  </li>
+  <li>No belching.</li>
+</ul>
+
+<h2>At any time during the show</h2>
+<ul class='rules'>
+  {% for incident in show_incidents %}
+    <li class='{{incident.penalty}}'>
+      <h3>{{incident.title}}</h3>
+      <p>
+        {{incident.description|safe}}
+        <em>
+          <img src='/static/{{incident.penalty}}.png' alt=''>
+          {{incident.get_penalty_display}}.
+        </em>
+      </p>
+    </li>
+  {% endfor %}
+</ul>
+
+<h2>No more than once per performance</h2>
+<ul class='rules'>
+  {% for incident in performance_incidents %}
+    <li class='{{incident.penalty}}'>
+      <h3>{{incident.title}}</h3>
+      <p>
+        {{incident.description|safe}}
+        <em>
+          <img src='/static/{{incident.penalty}}.png' alt=''>
+          {{incident.get_penalty_display}}.
+        </em>
+      </p>
+    </li>
+  {% endfor %}
+</ul>
+
+<h2>During the scoring rounds</h2>
+<ul class='rules'>
+  {% for incident in scoring_incidents %}
+    <li class='{{incident.penalty}}'>
+      <h3>{{incident.title}}</h3>
+      <p>
+        {{incident.description|safe}}
+        <em>
+          <img src='/static/{{incident.penalty}}.png' alt=''>
+          {{incident.get_penalty_display}}.
+        </em>
+      </p>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
