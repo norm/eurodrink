@@ -39,3 +39,18 @@ class Contest(models.Model):
 
     def __str__(self):
         return u"%s" % self.year
+
+
+class Singer(models.Model):
+    """
+    An individual singer that is, or is part of, an Artist.
+    """
+    id = models.CharField(primary_key=True, max_length=64)
+    name = models.CharField(max_length=128, blank=False, null=False)
+    known_as = models.CharField(max_length=128)
+    born = models.DateField(null=True, blank=True)
+    died = models.DateField(null=True, blank=True)
+    citizenship = models.ManyToManyField(Country)
+
+    def __str__(self):
+        return self.known_as or self.name
