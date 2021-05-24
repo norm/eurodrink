@@ -7,6 +7,8 @@ from contests.models import (
     Contest,
     Singer,
     Artist,
+    Song,
+    Participant,
 )
 
 
@@ -20,6 +22,7 @@ class Command(BaseCommand):
         for contest in Contest.objects.all():
             self.load_singers('eurovision_data/singers/%s.toml' % contest.year)
             self.load_artists('eurovision_data/artists/%s.toml' % contest.year)
+            self.load_songs('eurovision_data/songs/%s.toml' % contest.year, contest)
 
     def load_countries(self, data):
         countries = toml.load(data)
@@ -65,3 +68,28 @@ class Command(BaseCommand):
             )
             for singer in singers:
                 obj.singer.add(Singer.objects.get(id=singer))
+
+    def load_songs(self, data, contest):
+        songs = toml.load(data)
+        for song in songs:
+            langs = []
+            country = Country.objects.get(id=songs[song]['country'])
+            for language in songs[song]['language']:
+                lang, _ = Language.objects.get_or_create(id=language)
+                langs.append(lang)
+            obj, _ = Song.objects.update_or_create(
+                id=song,
+                title=songs[song]['title'],
+                artist=Artist.objects.get(id=songs[song]['artist']),
+                country=country,
+                contest=contest,
+            )
+            for lang in langs:
+                obj.languages.add(lang)
+
+            # a Participant is a Country in a Contest, which has a 1:1
+            # relationship with a Song, so we create that here too
+            Participant.objects.get_or_create(
+                country=country,
+                contest=contest,
+            )

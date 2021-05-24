@@ -67,3 +67,33 @@ class Artist(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Song(models.Model):
+    """
+    A song, as performed by an Artist, that represents a Country in a
+    Contest.
+    """
+    id = models.CharField(primary_key=True, max_length=64)
+    title = models.CharField(max_length=128, blank=False, null=False)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    languages = models.ManyToManyField(Language, blank=True)
+
+    def __str__(self):
+        return u"%s by %s (from %s)" % (self.title, self.artist, self.contest)
+
+
+class Participant(models.Model):
+    """
+    A Country taking part in a Contest.
+    """
+    class Meta:
+        unique_together = ['country', 'contest']
+
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s in %s' % (self.country, self.contest)
