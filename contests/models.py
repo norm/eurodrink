@@ -126,6 +126,7 @@ class Performance(models.Model):
 
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     show = models.ForeignKey(Show, on_delete=models.CASCADE)
+    occurred = models.BooleanField(default=True)
 
     @property
     def score(self):

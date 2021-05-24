@@ -18,38 +18,12 @@
   </header>
 
   <main>
-    <div class='performance'>
-      <h2>Performance incidents</h2>
-      <ul class='incidents'>
-        {% for incident in performance_incidents %}
-          <li>
-            <form method='post'>
-              {% csrf_token %}
-              <button type='submit'>
-                <em>{{incident.title}}</em>
-                <span>{{incident.description}}</span>
-              </button>
-            </form>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class='score'>
-      <h2>Scoring incidents</h2>
-      <ul class='incidents'>
-        {% for incident in score_incidents %}
-          <li>
-            <form method='post'>
-              {% csrf_token %}
-              <button type='submit'>
-                <em>{{incident.title}}</em>
-                <span>{{incident.description}}</span>
-              </button>
-            </form>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
+    {% if mode == 'performance' %}
+      {% include "controlpanel_performance.html" %}
+    {% else %}
+      {% include "controlpanel_scoring.html" %}
+    {% endif %}
+
     <div class='show'>
       <h2>Entire show incidents</h2>
       <ul class='incidents'>

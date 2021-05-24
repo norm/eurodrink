@@ -18,10 +18,16 @@ from django.urls import path
 from django.views.generic.base import RedirectView
 
 from controlpanel.views import ControlPanel
+from contests.views import PerformanceUpdate
 
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/panel/')),
     path('admin/', admin.site.urls),
     path('panel/', ControlPanel.as_view()),
+
+    path(
+        'panel/performance/<int:pk>',
+        PerformanceUpdate.as_view()
+    ),
 ]

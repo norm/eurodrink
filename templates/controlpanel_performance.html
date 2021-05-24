@@ -1,0 +1,37 @@
+<h1>
+  {{this.song.title}} by {{this.song.artist}}, {{this.song.country}} #{{this.song.country.hashtag}}
+  ({{this.song.languages.all|join:", "}})
+</h1>
+
+<form method='post' action='/panel/performance/{{this.pk}}' class='finished'>
+  {% csrf_token %}
+  <input type='hidden' name='occurred' value='true'>
+  <button type='submit'>
+    Finished!
+  </button>
+</form>
+
+<p class='up-next'>
+{% if all|length > 1 %}
+    Up next:
+    {{all.1.song.title}} by {{all.1.song.artist}},
+    {{all.1.song.country}} #{{all.1.song.country.hashtag}}
+    ({{all|length}} remaining)
+{% else %}
+  Up next: Scoring!
+{% endif %}
+</p>
+
+<ul class='incidents'>
+  {% for incident in performance_incidents %}
+    <li>
+      <form method='post'>
+        {% csrf_token %}
+        <button type='submit'>
+          <em>{{incident.title}}</em>
+          <span>{{incident.description}}</span>
+        </button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>

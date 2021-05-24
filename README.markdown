@@ -38,6 +38,8 @@ during the contest itself.
 To log into the admin interface, visit http://localhost:3876/ with the
 username `norm` and password `norm`.
 
+The admin navigation contains a link to the control panel that is used
+to tweet the drinking game during the grand final.
 
 ## Website publication
 
@@ -48,3 +50,13 @@ username `norm` and password `norm`.
     # copy when satisifed
     make static
     aws s3 sync site/. s3://eurovisiondrinking.com/.
+
+
+## Running the drinking game
+
+First, ensure this year's data is in `eurovision_data/`, even in draft. The
+performances should have their data entered fully (artists, singers,
+languages), and double-checked they are in the correct running order,
+as this is relied upon for ease of navigating acts in the control panel.
+
+    sh update.sh

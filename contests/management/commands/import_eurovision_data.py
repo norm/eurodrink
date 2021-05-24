@@ -119,6 +119,7 @@ class Command(BaseCommand):
     def load_shows(self, data, contest):
         shows = toml.load(data)
         for show in shows:
+            in_past = shows[show]['date'] < date.today()
             show_obj, _ = Show.objects.update_or_create(
                 id=show,
                 contest=contest,
@@ -129,10 +130,16 @@ class Command(BaseCommand):
                 perf_obj, _ = Performance.objects.update_or_create(
                     song=Song.objects.get(id=performance),
                     show=show_obj,
+                    occurred=in_past,
                 )
 
     def load_scores(self, data, show):
-        scores = toml.load(data)
+        try:
+            scores = toml.load(data)
+        except:
+            print('** no scores for %s' % show)
+            return
+
         for country_id in scores:
             country = Country.objects.get(id=country_id)
             for score in scores[country_id]:
