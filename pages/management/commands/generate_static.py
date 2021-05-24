@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from pages.pages import HomePage
+from pages.pages import HomePage, RecipePage
 
 
 class Command(BaseCommand):
@@ -8,3 +8,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         HomePage().generate()
+        RecipePage().generate()

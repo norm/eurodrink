@@ -59,8 +59,43 @@ footer {
     margin: 40px 40px 20px;
 }
 
+nav {
+    margin: 10px 60px;
+}
+nav::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+nav ul,
+nav ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+nav ul li {
+    float: left;
+}
+nav ul li::before {
+    content: '•';
+    color: #fbf432;
+    padding: 0 10px;
+}
+
 main {
     padding-bottom: 10px;
+}
+
+#punch p.short {
+    clear: both;
+}
+#punch p img {
+    width: 400px;
+    max-width: 50%;
+    float: right;
+    margin: 0 0 30px 40px;
+    border: 3px solid black;
+    outline: 1px solid #666;
 }
 
 #main {
@@ -145,6 +180,20 @@ footer {
     ul {
         margin: 0 40px 20px;
     }
+    nav {
+        margin: 0;
+    }
+    nav ul li {
+        float: none;
+    }
+
+    #punch p img {
+        float: none;
+        display: block;
+        max-width: 90%;
+        margin: 0 auto 10px;
+    }
+
     footer {
         padding-top: 10px;
         margin-top: 10px;
@@ -178,5 +227,9 @@ footer {
 @media (min-width: 500px) {
     strong.start {
         display: block;
+    }
+    nav ul li:first-child::before {
+        content: '';
+        padding: 0;
     }
 }

@@ -16,3 +16,10 @@ class HomePage(StaticPage):
             'show_incidents': ShowIncidentType.objects.all(),
             'scoring_incidents': ScoreIncidentType.objects.all(),
         }
+
+
+class RecipePage(StaticPage):
+    template_name = 'rum_punch.html'
+
+    def get_filename(self):
+        return 'rum-punch/index.html'
