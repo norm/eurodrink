@@ -1,0 +1,3 @@
+[submodule "eurovision_data"]
+	path = eurovision_data
+	url = https://github.com/norm/eurovision_data
