@@ -30,6 +30,7 @@ class Command(BaseCommand):
         self.load_show_incident_types('drinking_data/show.toml')
 
         self.load_countries('eurovision_data/countries.toml')
+        self.load_neighbours('drinking_data/neighbours.toml')
         self.load_contests('eurovision_data/contests.toml')
 
         for contest in Contest.objects.all():
@@ -64,6 +65,23 @@ class Command(BaseCommand):
             )
             for lang in langs:
                 obj.languages.add(lang)
+
+    def load_neighbours(self, data):
+        neighbours = toml.load(data)
+        for country_id in neighbours:
+            try:
+                country = Country.objects.get(id=country_id)
+                print(country_id)
+            except:
+                continue
+
+            for neighbour_id in neighbours[country_id]:
+                try:
+                    neighbour = Country.objects.get(id=neighbour_id)
+                    country.neighbours.add(neighbour)
+                    print('  ', neighbour_id)
+                except:
+                    pass
 
     def load_contests(self, data):
         contests = toml.load(data)
