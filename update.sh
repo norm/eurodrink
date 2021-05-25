@@ -1,6 +1,6 @@
-#!/usr/bin/env bash -euo pipefail
+#!/usr/bin/env -S bash -euo pipefail
 
-rm db.sqlite3
+rm -f db.sqlite3
 python manage.py migrate
 
 DJANGO_SUPERUSER_USERNAME=norm \

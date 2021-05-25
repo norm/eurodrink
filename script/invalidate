@@ -1,0 +1,19 @@
+#!/usr/bin/env -S bash -euo pipefail
+
+declare -a paths
+
+paths=("$@")
+[ "${#paths[@]}" = 0 ] && paths=('/*')
+
+id=$(
+    aws cloudfront create-invalidation \
+        --distribution-id EXD7UA50HHKFY \
+        --paths "${paths[@]}" \
+            | jq -r .Invalidation.Id
+)
+
+echo "Waiting on invalidation '$id'"
+time \
+    aws cloudfront wait invalidation-completed \
+        --distribution-id EXD7UA50HHKFY \
+        --id $id
