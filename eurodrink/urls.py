@@ -17,7 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic.base import RedirectView
 
-from controlpanel.views import ControlPanel
+from controlpanel.views import (
+    ControlPanel,
+    SetScoringContext,
+    ScoringComplete,
+)
 from contests.views import PerformanceUpdate
 
 
@@ -29,5 +33,14 @@ urlpatterns = [
     path(
         'panel/performance/<int:pk>',
         PerformanceUpdate.as_view()
+    ),
+
+    path(
+        'panel/reporting/',
+        SetScoringContext.as_view()
+    ),
+    path(
+        'panel/scored/<slug:pk>',
+        ScoringComplete.as_view()
     ),
 ]

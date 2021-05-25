@@ -60,3 +60,16 @@ languages), and double-checked they are in the correct running order,
 as this is relied upon for ease of navigating acts in the control panel.
 
     sh update.sh
+
+The panel will present the first performance and all the possible incidents.
+When the performance is over, click "Finished", that performance is marked
+as having occurred, and the next will be presented.
+
+Once all performances have finished, the panel will switch to the scoring
+round incidents. A list of all participants is presented. As each score is
+reported, click the country in question and the possible incidents will be
+presented. Once that participant's scores have been announced, click
+"Finished" and that participant is marked as having scored.
+
+Once all participants have announced their scores, the panel will announce
+that you are done.

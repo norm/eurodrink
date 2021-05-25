@@ -1,1 +1,59 @@
-<h1>Aaaaaand we're done.</h1>
+{% if remaining|length == 0 %}
+  <h1>Aaaaaand we're done.</h1>
+{% else %}
+
+<h1>
+  {% if reporting %}
+    {{reporting.country}} #{{reporting.country.hashtag}}
+  {% else %}
+    <em>Select the country reporting its score.</em>
+  {% endif %}
+</h1>
+{% if reporting %}
+  <form method='post' action='/panel/scored/{{reporting.country.pk}}' class='finished'>
+    {% csrf_token %}
+    <input type='hidden' name='points' value='12'>
+    <input type='hidden' name='country' value='{{reporting.country.pk}}'>
+    <input type='hidden' name='performance' value='{{performance.pk}}'>
+    <input type='hidden' name='source' value='jury'>
+    <button type='submit'>
+      Finished!
+    </button>
+  </form>
+{% endif %}
+
+{% if reporting %}
+  <ul class='incidents'>
+    {% for incident in scoring_incidents %}
+      <li>
+        <form method='post'>
+          {% csrf_token %}
+          <button type='submit'>
+            <em>{{incident.title}}</em>
+            <span>{{incident.description}}</span>
+          </button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<ul class='contexts'>
+  {% for participant in remaining %}
+  <li>
+    <form action='/panel/reporting/' method='post'>
+      {% csrf_token %}
+      <input type='hidden' name='participant' value='{{participant.pk}}'>
+      <button>{{participant.country}}</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+
+<ul class='contexts happened'>
+  {% for participant in voted %}
+    <li>{{participant}}</li>
+  {% endfor %}
+</ul>
+
+{% endif %}
