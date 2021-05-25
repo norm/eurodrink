@@ -17,6 +17,7 @@ from contests.models import (
 )
 from incidents.models import (
     PerformanceIncidentType,
+    PerformanceIncident,
     ShowIncidentType,
     ScoreIncidentType,
 )
@@ -63,7 +64,6 @@ class ControlPanel(PanelBase, TemplateView):
         contest = Contest.objects.get(year=date.today().year)
         show = contest.show_set.get(type='final')
         context['show'] = show
-        context['performance_incidents'] = PerformanceIncidentType.objects.all()
         context['show_incidents'] = ShowIncidentType.objects.all()
         context['score_incidents'] = ScoreIncidentType.objects.all()
         context['twitter_account'] = self.get_twitter_account()
@@ -76,6 +76,27 @@ class ControlPanel(PanelBase, TemplateView):
             context['mode'] = 'performance'
             context['this'] = performances[0]
             context['all'] = performances
+            context['happened_incidents'] = PerformanceIncident.objects.filter(
+                performance=performances[0],
+                predicted=False,
+            )
+            context['draft_incidents'] = PerformanceIncident.objects.filter(
+                performance=performances[0],
+                predicted=True,
+            )
+            possible_incidents = []
+            for incident_type in PerformanceIncidentType.objects.all():
+                append = 1
+                for incident in context['happened_incidents']:
+                    if incident.type == incident_type:
+                        append = 0
+                for incident in context['draft_incidents']:
+                    if incident.type == incident_type:
+                        append = 0
+                if append:
+                    possible_incidents.append(incident_type)
+            context['possible_incidents'] = possible_incidents
+
         else:
             context['mode'] = 'scoring'
             context['reporting'] = cache.get('reporting')

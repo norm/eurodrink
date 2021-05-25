@@ -22,18 +22,41 @@
 {% endif %}
 </p>
 
+<ul class='incidents draft'>
+  {% for incident in draft_incidents %}
+    <li>
+      <form method='post' action='/panel/performanceincident/{{incident.pk}}'>
+        {% csrf_token %}
+        <button type='submit'>
+          <em>{{incident.type.title}} ({{incident.type.penalty}})</em>
+          <span>{{incident.type.description}}</span>
+        </button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>
+
 <ul class='incidents'>
-  {% for incident in performance_incidents %}
+  {% for incident in possible_incidents %}
     <li>
       <form method='post' action='/panel/performanceincident/create'>
         {% csrf_token %}
         <input type='hidden' name='type' value='{{incident.pk}}'>
         <input type='hidden' name='performance' value='{{this.pk}}'>
+        <input type='hidden' name='predicted' value='false'>
         <button type='submit'>
           <em>{{incident.title}}</em>
           <span>{{incident.description}}</span>
         </button>
       </form>
+    </li>
+  {% endfor %}
+</ul>
+
+<ul class='incidents happened'>
+  {% for incident in happened_incidents %}
+    <li>
+      <em>{{incident.type.title}} ({{incident.type.penalty}})</em>
     </li>
   {% endfor %}
 </ul>

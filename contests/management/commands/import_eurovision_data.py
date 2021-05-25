@@ -16,6 +16,7 @@ from contests.models import (
 )
 from incidents.models import (
     PerformanceIncidentType,
+    PerformanceIncident,
     ScoreIncidentType,
     ShowIncidentType,
 )
@@ -24,6 +25,10 @@ class Command(BaseCommand):
     help = 'Import from eurovision_data/ files'
 
     def handle(self, *args, **options):
+        self.load_performance_incident_types('drinking_data/performance.toml')
+        self.load_score_incident_types('drinking_data/score.toml')
+        self.load_show_incident_types('drinking_data/show.toml')
+
         self.load_countries('eurovision_data/countries.toml')
         self.load_contests('eurovision_data/contests.toml')
 
@@ -42,9 +47,8 @@ class Command(BaseCommand):
                 show,
             )
 
-        self.load_performance_incident_types('drinking_data/performance.toml')
-        self.load_score_incident_types('drinking_data/score.toml')
-        self.load_show_incident_types('drinking_data/show.toml')
+        for contest in Contest.objects.all():
+            self.load_show_incidents('drinking_data/%s.toml' % contest.year, contest)
 
     def load_countries(self, data):
         countries = toml.load(data)
@@ -117,6 +121,9 @@ class Command(BaseCommand):
             )
 
     def load_shows(self, data, contest):
+        another = PerformanceIncidentType.objects.get(id='another-country')
+        langchange = PerformanceIncidentType.objects.get(id='language-change')
+
         shows = toml.load(data)
         for show in shows:
             in_past = shows[show]['date'] < date.today()
@@ -132,6 +139,23 @@ class Command(BaseCommand):
                     show=show_obj,
                     occurred=in_past,
                 )
+                # since we have the data for this already, add draft incidents
+                # for "singer from another country" and "language change"
+                if not in_past and show_obj.type == 'final':
+                    for singer in perf_obj.song.artist.singer.all():
+                        for cs in singer.citizenship.all():
+                            if perf_obj.song.country != cs:
+                                PerformanceIncident.objects.create(
+                                    type=another,
+                                    performance=perf_obj,
+                                    predicted=True,
+                                )
+                if perf_obj.song.languages.count() > 1:
+                    PerformanceIncident.objects.create(
+                        type=langchange,
+                        performance=perf_obj,
+                        predicted=True,
+                    )
 
     def load_scores(self, data, show):
         try:
@@ -177,3 +201,26 @@ class Command(BaseCommand):
                 id=incident,
                 **incidents[incident],
             )
+
+    def load_show_incidents(self, data, contest):
+        try:
+            incidents = toml.load(data)
+        except:
+            print('** no incidents for %s' % contest)
+            return
+
+        show = contest.show_set.get(type='final')
+        future = show.date >= date.today()
+        for song_id in incidents:
+            # print(song_id, incidents[song_id])
+            for incident in incidents[song_id]:
+                incident_type = PerformanceIncidentType.objects.get(id=incident)
+                performance = Performance.objects.filter(
+                    song=song_id,
+                    show=show,
+                )[0]
+                PerformanceIncident.objects.create(
+                    type=incident_type,
+                    performance=performance,
+                    predicted=future,
+                )

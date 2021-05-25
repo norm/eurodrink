@@ -1,6 +1,12 @@
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from .models import PerformanceIncident, ScoreIncident, ShowIncident
+
+
+class PerformanceIncidentUpdate(UpdateView):
+    model = PerformanceIncident
+    fields = ['predicted']
+    success_url = '/panel/'
 
 
 class PerformanceIncidentCreate(CreateView):

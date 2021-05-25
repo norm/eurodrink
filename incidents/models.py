@@ -41,7 +41,11 @@ class BaseIncident(models.Model):
     """
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.tweet_incident()
+        if self.should_tweet():
+            self.tweet_incident()
+
+    def should_tweet(self):
+        return True
 
     def tweet_incident(self):
         args = [ self.get_incident_text(), ]
@@ -92,6 +96,10 @@ class PerformanceIncident(BaseIncident):
         Performance,
         on_delete=models.CASCADE
     )
+    predicted = models.BooleanField(default=False)
+
+    def should_tweet(self):
+        return self.predicted == False and self.performance.occurred == False
 
     def get_incident_text(self):
         if self.type.tweet:
@@ -104,8 +112,12 @@ class PerformanceIncident(BaseIncident):
         return '#%s' % self.performance.song.country.hashtag
 
     def __str__(self):
-        return '%s during %s' % (
+        predicted=''
+        if self.predicted:
+            predicted=' (predicted)'
+        return '%s%s during %s' % (
             self.type.title,
+            predicted,
             self.performance,
         )
 

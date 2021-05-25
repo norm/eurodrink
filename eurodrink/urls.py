@@ -27,6 +27,7 @@ from contests.views import PerformanceUpdate
 
 from incidents.views import (
     PerformanceIncidentCreate,
+    PerformanceIncidentUpdate,
     ScoreIncidentCreate,
     ShowIncidentCreate,
 )
@@ -51,6 +52,10 @@ urlpatterns = [
         ScoringComplete.as_view()
     ),
 
+    path(
+        'panel/performanceincident/<int:pk>',
+        PerformanceIncidentUpdate.as_view()
+    ),
     path(
         'panel/performanceincident/create',
         PerformanceIncidentCreate.as_view()
