@@ -84,6 +84,7 @@ languages), and double-checked they are in the correct running order,
 as this is relied upon for ease of navigating acts in the control panel.
 
     sh update.sh
+    sh production.sh
 
 The panel will present the first performance and all the possible incidents.
 When the performance is over, click "Finished", that performance is marked
