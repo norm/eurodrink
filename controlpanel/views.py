@@ -6,6 +6,8 @@ from django.views.generic import (
     TemplateView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
+import os
+import tweepy
 
 from contests.models import (
     Contest,
@@ -23,9 +25,38 @@ from incidents.models import (
 class PanelBase(LoginRequiredMixin):
     login_url = '/admin/login/'
 
+    def send_tweet(self, text):
+        auth = tweepy.OAuthHandler(
+            os.environ['CONSUMER_KEY'],
+            os.environ['CONSUMER_SECRET'],
+        )
+        auth.set_access_token(
+            os.environ['ACCESS_TOKEN'],
+            os.environ['ACCESS_TOKEN_SECRET'],
+        )
+        api = tweepy.API(auth)
+        api.update_status(text)
+
 
 class ControlPanel(PanelBase, TemplateView):
     template_name = 'controlpanel.html'
+
+    def get_twitter_account(self):
+        account = cache.get('twitter_account')
+        if not account:
+            auth = tweepy.OAuthHandler(
+                os.environ['CONSUMER_KEY'],
+                os.environ['CONSUMER_SECRET'],
+            )
+            auth.set_access_token(
+                os.environ['ACCESS_TOKEN'],
+                os.environ['ACCESS_TOKEN_SECRET'],
+            )
+            api = tweepy.API(auth)
+            tweeter = api.verify_credentials()
+            cache.set('twitter_account', tweeter.screen_name, 3600)
+            account = cache.get('twitter_account')
+        return account
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -35,6 +66,7 @@ class ControlPanel(PanelBase, TemplateView):
         context['performance_incidents'] = PerformanceIncidentType.objects.all()
         context['show_incidents'] = ShowIncidentType.objects.all()
         context['score_incidents'] = ScoreIncidentType.objects.all()
+        context['twitter_account'] = self.get_twitter_account()
 
         performances = Performance.objects.filter(
             show=show,
@@ -92,4 +124,13 @@ class ScoringComplete(PanelBase, CreateView):
 
     def post(self, request, *args, **kwargs):
         cache.delete('reporting')
+        return super().post(request, *args, **kwargs)
+
+
+class FreeTweet(PanelBase, RedirectView):
+    url = '/panel/'
+
+    def post(self, request, *args, **kwargs):
+        tweet = request.POST.get('tweet')
+        self.send_tweet('%s #Eurovision #esc%d' % (tweet, date.today().year))
         return super().post(request, *args, **kwargs)

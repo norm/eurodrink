@@ -15,6 +15,19 @@
 
   <header>
     <h1>Eurovision Drinking Game</h1>
+    <nav>
+      <ul>
+        <li><a href='/admin/'>Django admin</a></li>
+        <li>Tweeting as @{{twitter_account}}</li>
+        <li>
+          <form method='post' action='/panel/tweet/'>
+            {% csrf_token %}
+            <input type='text' name='tweet'>
+            <button>Tweet</button>
+          </form>
+        </li>
+      </ul>
+    </nav>
   </header>
 
   <main>
@@ -29,8 +42,10 @@
       <ul class='incidents'>
         {% for incident in show_incidents %}
           <li>
-            <form method='post'>
+            <form method='post' action='/panel/showincident/create'>
               {% csrf_token %}
+              <input type='hidden' name='type' value='{{incident.pk}}'>
+              <input type='hidden' name='show' value='{{show.pk}}'>
               <button type='submit'>
                 <em>{{incident.title}}</em>
                 <span>{{incident.description}}</span>

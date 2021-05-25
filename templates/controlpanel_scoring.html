@@ -26,8 +26,10 @@
   <ul class='incidents'>
     {% for incident in scoring_incidents %}
       <li>
-        <form method='post'>
+        <form method='post' action='/panel/scoreincident/create'>
           {% csrf_token %}
+          <input type='hidden' name='type' value='{{incident.pk}}'>
+          <input type='hidden' name='participant' value='{{reporting.pk}}'>
           <button type='submit'>
             <em>{{incident.title}}</em>
             <span>{{incident.description}}</span>

@@ -19,10 +19,17 @@ from django.views.generic.base import RedirectView
 
 from controlpanel.views import (
     ControlPanel,
+    FreeTweet,
     SetScoringContext,
     ScoringComplete,
 )
 from contests.views import PerformanceUpdate
+
+from incidents.views import (
+    PerformanceIncidentCreate,
+    ScoreIncidentCreate,
+    ShowIncidentCreate,
+)
 
 
 urlpatterns = [
@@ -43,4 +50,21 @@ urlpatterns = [
         'panel/scored/<slug:pk>',
         ScoringComplete.as_view()
     ),
+
+    path(
+        'panel/performanceincident/create',
+        PerformanceIncidentCreate.as_view()
+    ),
+    path(
+        'panel/scoreincident/create',
+        ScoreIncidentCreate.as_view()
+    ),
+    path(
+        'panel/showincident/create',
+        ShowIncidentCreate.as_view()
+    ),
+    path(
+        'panel/tweet/',
+        FreeTweet.as_view(),
+    )
 ]

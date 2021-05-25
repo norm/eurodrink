@@ -25,8 +25,10 @@
 <ul class='incidents'>
   {% for incident in performance_incidents %}
     <li>
-      <form method='post'>
+      <form method='post' action='/panel/performanceincident/create'>
         {% csrf_token %}
+        <input type='hidden' name='type' value='{{incident.pk}}'>
+        <input type='hidden' name='performance' value='{{this.pk}}'>
         <button type='submit'>
           <em>{{incident.title}}</em>
           <span>{{incident.description}}</span>

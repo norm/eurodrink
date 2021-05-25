@@ -1,5 +1,9 @@
+from datetime import date
+import os
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+import tweepy
 
 from contests.models import Performance, Score, Show, Participant
 
@@ -21,11 +25,47 @@ class BaseIncidentType(models.Model):
     tweet = models.CharField(max_length=230, blank=True, null=True)
     penalty = models.CharField(max_length=12, choices=Penalty.choices)
 
+    def tweet_text(self):
+        return self.tweet or self.description
+
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = ['title']
+
+
+class BaseIncident(models.Model):
+    """
+    An Incident is an instance of an IncidentType that has happened.
+    """
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.tweet_incident()
+
+    def tweet_incident(self):
+        args = [ self.get_incident_text(), ]
+        context = self.get_context_hashtag()
+        if context:
+            args.append(context)
+        args.append('#Eurovision')
+        args.append('#esc%d' % date.today().year)
+        self.send_tweet(' '.join(args))
+
+    def send_tweet(self, text):
+        auth = tweepy.OAuthHandler(
+            os.environ['CONSUMER_KEY'],
+            os.environ['CONSUMER_SECRET'],
+        )
+        auth.set_access_token(
+            os.environ['ACCESS_TOKEN'],
+            os.environ['ACCESS_TOKEN_SECRET'],
+        )
+        api = tweepy.API(auth)
+        api.update_status(text)
+
+    class Meta:
+        abstract = True
 
 
 class PerformanceIncidentType(BaseIncidentType):
@@ -39,7 +79,7 @@ class PerformanceIncidentType(BaseIncidentType):
     )
 
 
-class PerformanceIncident(models.Model):
+class PerformanceIncident(BaseIncident):
     """
     An instance of a PerformanceIncidentType that has occurred
     during a specific Performance.
@@ -52,6 +92,16 @@ class PerformanceIncident(models.Model):
         Performance,
         on_delete=models.CASCADE
     )
+
+    def get_incident_text(self):
+        if self.type.tweet:
+            text = self.type.tweet
+        else:
+            text ='%s - %s' % (self.type.title, self.type.description)
+        return '%s! %s' % (self.type.get_penalty_display(), text)
+
+    def get_context_hashtag(self):
+        return '#%s' % self.performance.song.country.hashtag
 
     def __str__(self):
         return '%s during %s' % (
@@ -72,7 +122,7 @@ class ScoreIncidentType(BaseIncidentType):
     )
 
 
-class ScoreIncident(models.Model):
+class ScoreIncident(BaseIncident):
     """
     An instance of a ScoreIncidentType that has occurred as a specific
     Participant has announced their scores during a Show of a Contest.
@@ -85,6 +135,16 @@ class ScoreIncident(models.Model):
         Participant,
         on_delete=models.CASCADE
     )
+
+    def get_incident_text(self):
+        if self.type.tweet:
+            text = self.type.tweet
+        else:
+            text ='%s - %s' % (self.type.title, self.type.description)
+        return '%s! %s' % (self.type.get_penalty_display(), text)
+
+    def get_context_hashtag(self):
+        return '#%s' % self.participant.country.hashtag
 
     def __str__(self):
         return '%s by %s' % (self.type, self.participant)
@@ -101,7 +161,7 @@ class ShowIncidentType(BaseIncidentType):
     )
 
 
-class ShowIncident(models.Model):
+class ShowIncident(BaseIncident):
     """
     An instance of a ShowIncidentType that has occurred during
     a specific Show of a Contest.
@@ -114,6 +174,15 @@ class ShowIncident(models.Model):
         Show,
         on_delete=models.CASCADE
     )
+
+    def get_incident_text(self):
+        return '%s! %s' % (
+            self.type.get_penalty_display(),
+            self.type.description,
+        )
+
+    def get_context_hashtag(self):
+        return None
 
     def __str__(self):
         return '%s in %s' % (self.type, self.show)

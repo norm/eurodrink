@@ -22,6 +22,30 @@ The control panel is normally used via a virtual environment.
     pip install -r requirements.txt
 
 
+## Twitter credentials
+
+In order to tweet, we first need twitter credentials for the app and the user
+to tweet as. Add the consumer key and secret obtained from
+[Twitter](https://developer.twitter.com/en/apps) to the `.env` file:
+
+    PYTHONUNBUFFERED=True
+    CALLBACK_URL=http://localhost:5000/done
+    CONSUMER_KEY=XXX
+    CONSUMER_SECRET=XXX
+
+Run the auth app, then visit [http://localhost:5000/](http://localhost:5000/):
+
+    honcho start auth
+
+Sign in with the Twitter account you want to use and authorize the app.
+Add the two lines provided to the end of your `.env` file:
+
+    ACCESS_TOKEN=XXX
+    ACCESS_TOKEN_SECRET=XXX
+
+You can now stop the auth app running.
+
+
 ## Refreshing the data
 
 The database is not to be treated as the canonical source of data, it is just
