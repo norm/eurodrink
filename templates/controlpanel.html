@@ -9,6 +9,139 @@
       font-size: 14px;
       line-height: 1.4;
     }
+
+    h1 {
+      margin: 0;
+      padding: 0;
+    }
+    form.finished {
+      float: left;
+    }
+    p.up-next,
+    p.neighbours {
+      margin: 0.4em 1em 3em;
+      float: left;
+    }
+
+    nav,
+    nav a,
+    nav form button {
+      color: #777;
+    }
+    nav form {
+      display: inline-block;
+    }
+    nav form button {
+      padding: 2px 5px;
+      border-colour: #999;
+      color: #999;
+    }
+
+    button {
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid #000;
+    }
+    main button {
+      border-radius: 6px;
+      padding: 5px 10px;
+    }
+
+    header {
+      margin-bottom: 3em;
+    }
+    header h1 {
+      margin: 0;
+    }
+    header nav ul,
+    header nav li {
+      margin: 0;
+      padding: 0;
+    }
+    header nav li {
+      display: inline-block;
+    }
+    header nav li::after {
+      content: ' • ';
+    }
+    header nav li:last-child::after {
+      content: '';
+    }
+
+    ul.incidents {
+      clear: both;
+    }
+    ul.incidents,
+    ul.incidents li {
+      margin: 0;
+      padding: 0;
+    }
+    ul.incidents li {
+      list-style: none;
+      display: inline-block;
+      min-width: 160px;
+    }
+    ul.incidents li em {
+      font-weight: bold;
+      font-style: normal;
+    }
+    ul.incidents button {
+      width: 160px;
+      text-align: left;
+      max-height: 140px;
+      padding: 2px 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    ul.incidents button em, ul.incidents button span {
+      display: block;
+    }
+    ul.incidents button span {
+      height: 150px;
+      padding-top: 5px;
+    }
+    ul.incidents.draft button {
+      border: 1px solid #993;
+      background: #ffb;
+    }
+    ul.incidents.happened li {
+      min-height: 2em;
+      padding: 5px 10px;
+      min-width: 140px;
+      border: 1px solid #3c3;
+      background: #cfc;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    ul.contexts,
+    ul.contexts li {
+      margin: 0 5px 1em 0;
+      padding: 0;
+    }
+    ul.contexts {
+      margin: 1em 0;
+    }
+    ul.contexts.happened {
+      margin-top: 3em;
+    }
+    ul.contexts li {
+      display: inline-block;
+      list-style: none;
+    }
+    ul.contexts.happened li {
+      min-height: 1em;
+      padding: 5px 10px;
+      border: 1px solid #3c3;
+      background: #cfc;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    div.show {
+      clear: both;
+      padding-top: 3em;
+    }
   </style>
 </head>
 <body>
