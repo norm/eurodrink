@@ -24,7 +24,7 @@
 
 {% if reporting %}
   <ul class='incidents'>
-    {% for incident in scoring_incidents %}
+    {% for incident in possible_incidents %}
       <li>
         <form method='post' action='/panel/scoreincident/create'>
           {% csrf_token %}
@@ -35,6 +35,14 @@
             <span>{{incident.description}}</span>
           </button>
         </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <ul class='incidents happened'>
+    {% for incident in happened_incidents %}
+      <li>
+        <em>{{incident.type.title}}</em>
       </li>
     {% endfor %}
   </ul>

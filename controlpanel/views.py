@@ -20,6 +20,7 @@ from incidents.models import (
     PerformanceIncident,
     ShowIncidentType,
     ScoreIncidentType,
+    ScoreIncident,
 )
 
 
@@ -125,7 +126,18 @@ class ControlPanel(PanelBase, TemplateView):
                 remaining,
                 key=lambda c: c.country.english
             )
-            context['scoring_incidents'] = ScoreIncidentType.objects.all()
+            context['happened_incidents'] = ScoreIncident.objects.filter(
+                participant=context['reporting']
+            )
+            possible_incidents = []
+            for incident_type in ScoreIncidentType.objects.all():
+                append = 1
+                for incident in context['happened_incidents']:
+                    if incident.type == incident_type:
+                        append = 0
+                if append:
+                    possible_incidents.append(incident_type)
+            context['possible_incidents'] = possible_incidents
         return context
 
 
