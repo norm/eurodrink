@@ -12,6 +12,8 @@ get back to enjoying Eurovision as quickly as possible.
 This repo is that control panel, and the source for the website
 [http://eurovisiondrinking.com](http://eurovisiondrinking.com).
 
+(There was an earlier version published, but this is a complete rewrite.
+The original still exists at [v1](https://github.com/norm/eurodrink/tree/v1).)
 
 ## Setting up
 
