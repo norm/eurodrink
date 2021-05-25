@@ -7,10 +7,11 @@ body {
 }
 
 /* not needed when printing */
-#main > h3,
+#homepage h3,
 #intro,
 #responsibly,
 #printing,
+nav,
 footer {
     display: none;
 }
@@ -87,4 +88,22 @@ h2 {
     right: 0;
     width: 30px;
     height: 30px;
+}
+
+#punch {
+    font-size: 18px;
+}
+#punch h2 {
+    margin-bottom: 2em;
+}
+#punch p {
+    margin: 1em 0;
+}
+#punch p.short {
+    clear: both;
+}
+#punch p img {
+    max-width: 30%;
+    float: right;
+    margin: 0 0 30px 40px;
 }

@@ -1,4 +1,7 @@
-.PHONY: css static
+.PHONY: clean css static upload
+
+clean:
+	git co templates/css.html
 
 css:
 	@./script/fingerprint_css
